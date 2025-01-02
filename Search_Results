@@ -1,0 +1,29 @@
+//search results reloading and focus needs to move to results
+$ae('.fsConstituentSearchButton.fsStyleUpdateButton').on('click', function () {
+    // Allow the form to submit and the page to reload
+    // Use sessionStorage to store information about focus
+    sessionStorage.setItem('focusAfterReload', 'true');
+});
+
+$ae(document).ready(function () {
+    // Check if we need to set focus after reload
+    if (sessionStorage.getItem('focusAfterReload') === 'true') {
+        sessionStorage.removeItem('focusAfterReload'); // Clear the flag
+
+        // Use setTimeout to ensure elements are present in the DOM
+        setTimeout(() => {
+            let results = $ae('#fsEl_4718 > .fsElementContent > .fsConstituentColumnLayout_4');
+            let noResults = $ae('#fsEl_4718 > .fsElementContent > .fsElementEmpty');
+
+            // Set focus based on the presence of elements
+            // Check if results exist
+            if (results.length > 0) {
+                // Focus on the results container
+                AudioEye.focusElement(results);
+            } else {
+                // Focus on the no results container
+                AudioEye.focusElement(noResults);
+            }
+        }, 50); // Adjust timeout duration as needed
+    }
+});
