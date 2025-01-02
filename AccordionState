@@ -1,0 +1,9 @@
+//accordion state
+ele.outerFind('.fsCalendarGroupName.fsStyleExpandable').each(function () {
+ $ae(this).on('click', function () {
+   let isExpanded = $ae(this).attr('aria-expanded') === 'true';
+  
+   // Toggle the aria-expanded attribute
+   $ae(this).attr('aria-expanded', !isExpanded);
+ });
+});
