@@ -1,0 +1,25 @@
+//make sure it's a button and not a link
+//label button to let users know it opens a modal
+ele
+  .outerFind('[href="/search"]')
+  .attr({ role: 'button', 'aria-label': 'Search - Opens Modal' });
+
+// Remediate dialog
+ele.outerFind('#fsEl_127036 > .fsElementContent').each(function () {
+  /** Do all your remediations for the modal here before sending focus **/
+  $ae(this).attr({
+    role: 'dialog',
+    'aria-modal': 'true',
+    'aria-label': 'Tacoma Public Schools Search',
+  });
+  AudioEye.modals.enableTabLoop($ae(this));
+
+  // SEND FOCUS TO THE CLOSE BUTTON
+  AudioEye.focusElement($ae(this).find('button.find-it-fast-toggle').first());
+});
+
+// Close the modal - refocus trigger
+ele.outerFind('button.find-it-fast-toggle').on('click', function () {
+  AudioEye.focusElement('[href="/search"]');
+  AudioEye.modals.disableTabLoop('#fsEl_127036 > .fsElementContent');
+});
