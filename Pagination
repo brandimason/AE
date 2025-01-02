@@ -1,0 +1,34 @@
+// Adding attributes when mutations happens - it's being removed each time page is loaded
+$ae('#fsEl_4718 .fsElementPagination').first().attr({
+  role: 'navigation',
+  'aria-label': 'pagination',
+});
+
+//Set aria-current for page one on page load
+ele
+  .outerFind('#fsEl_4718 .fsElementPagination a.fsFirstPageLink')
+  .first()
+  .attr('aria-current', 'page');
+
+// Handle click events to update aria-current
+$ae('#fsEl_4718 .fsElementPagination')
+  .first()
+  .on('click', function () {
+    setTimeout(function () {
+        let activeElement = $ae('#fsEl_4718 .fsElementPagination').first().find('span.active');
+        // Remove aria-current from all links
+        $ae('#fsEl_4718 .fsElementPagination')
+            .first()
+            .find('a')
+            .not('active')
+            .removeAttr('aria-current');
+            
+        console.log('removing aria-current')
+        // Set aria-current and tabindex on the active page, was disabled previously
+        $ae(activeElement).attr({ 'aria-current': 'page', tabindex: '0' });
+        console.log('adding-aria-current');
+
+      //Keep focus on pagination to announce new page loaded
+      AudioEye.focusElement(activeElement);
+    }, 250);
+  });
