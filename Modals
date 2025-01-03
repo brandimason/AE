@@ -1,0 +1,5 @@
+//link needs to be button, button opens modal
+ele.outerFind('.fsCalendarEventTitle.fsCalendarEventLink').each(function () {
+  let calendarEvent = $ae(this).text().trim();
+  $ae(this).attr({ 'role': 'button', 'aria-label': calendarEvent + ' - opens modal'});
+});
