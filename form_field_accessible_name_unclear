@@ -1,0 +1,4 @@
+ele.outerFind("form").find("input").not("[type='hidden']").each(function() {
+    let parentLabel = $ae(this).parent().find("label").text().trim();
+    $ae(this).attr("aria-label", parentLabel);
+});
