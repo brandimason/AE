@@ -1,0 +1,25 @@
+ele.outerFind('a[aria-label]').each(function () {
+  var $this = $ae(this);
+  if ($this.find('img[alt]').length) {
+    $this.removeAttr('aria-label');
+  }
+});
+
+//option 2
+ele.outerFind('a[aria-label]').each(function () {
+  var $this = $ae(this);
+  var visibleText = $this.text().trim();
+  var currentAriaLabel = $this.attr('aria-label');
+  if (
+    visibleText &&
+    currentAriaLabel &&
+    !currentAriaLabel.toLowerCase().startsWith(visibleText.toLowerCase())
+  ) {
+    var newAriaLabel = visibleText;
+    if (currentAriaLabel.length > visibleText.length) {
+      newAriaLabel +=
+        ' - ' + currentAriaLabel.substring(visibleText.length).trim();
+    }
+    $this.attr('aria-label', newAriaLabel);
+  }
+});
