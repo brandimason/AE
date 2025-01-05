@@ -49,3 +49,20 @@ Efficiency:
 If the page contains many images or is updated frequently, consider performance implications.
 Accessibility Impact:
 Ensure the logic aligns with accessibility guidelines and doesn't inadvertently remove necessary alt attributes.
+
+
+//option 2:
+ele.outerFind('img[alt]').each(function (index) {
+  var $current = $ae(this);
+  var $next = $ae(this).next('img[alt]');
+  if ($next.length && $current.attr('alt') === $next.attr('alt')) {
+    if ($current.attr('src') === $next.attr('src')) {
+      $next.attr('alt', '');
+    } else {
+      var currentAlt = $current.attr('alt');
+      $current.attr('alt', currentAlt + ' (1 of 2)');
+      $next.attr('alt', currentAlt + ' (2 of 2)');
+    }
+  }
+});
+
