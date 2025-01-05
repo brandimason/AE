@@ -1,0 +1,7 @@
+ele.outerFind('a[role="button"][aria-label]').each(function () {
+  var $this = $ae(this);
+  var description = $this.attr('data-description') || '';
+  var uniqueId = description.substring(0, 20).replace(/[^a-zA-Z0-9]/g, '');
+  var newAriaLabel = $this.attr('aria-label') + ' - ' + uniqueId;
+  $this.attr('aria-label', newAriaLabel);
+});
