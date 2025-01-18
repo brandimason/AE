@@ -1,0 +1,10 @@
+// to update how a landmark is announced, use an aria-label
+
+//proper
+$('nav.sqs-svg-icon--list')
+  .attr('aria-label', 'Social Media');
+
+//why this doesn't work:
+$('nav.sqs-svg-icon--list')
+  .attr('aria-label', 'Social Media Navigation');
+// since this has the element <nav>, if I leave as is - this will announce navigation twice
