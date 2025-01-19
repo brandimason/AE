@@ -1,0 +1,3 @@
+//To hide an element from assistive technologies (AT) while also preventing it from receiving keyboard focus, you should apply the hiding method directly to the focusable element (e.g., <a>, <button>, <input>).
+
+$('selector').attr({'role': 'presentation', 'aria-hidden': 'true', 'tabindex': '-1'});
