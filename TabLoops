@@ -1,3 +1,37 @@
+//example from 1/18/25:
+//button that triggers modal
+ele
+  .outerFind('button.lightbox-handle.sqs-system-button.sqs-editable-button')
+  .attr('aria-label', 'Main Menu - Opens Modal');
+
+//remove attributes from incorrect element
+ele.outerFind('.sqs-modal-lightbox-content').each(function () {
+  $ae(this).removeAttr('role aria-label');
+  //add ID to reference aria-labelledby
+  $ae(this).find('.form-title').attr('id', 'ae-mailing-list');
+});
+
+// Remediate dialog
+ele.outerFind('.lightbox-content').each(function () {
+  /** Do all your remediations for the modal here before sending focus **/
+  $ae(this).attr({
+    role: 'dialog',
+    'aria-modal': 'true',
+    'aria-labelledby': 'ae-mailing-list',
+  });
+  AudioEye.modals.enableTabLoop($ae(this));
+
+  // SEND FOCUS TO THE CLOSE BUTTON
+  AudioEye.focusElement($ae(this).find('button.lightbox-close').first());
+});
+
+// Close the modal - refocus trigger
+ele.outerFind('button.lightbox-close').on('click', function () {
+  AudioEye.focusElement('button.lightbox-handle.sqs-system-button.sqs-editable-button');
+  AudioEye.modals.disableTabLoop('.lightbox-content');
+});
+
+
 //make sure it's a button and not a link
 //label button to let users know it opens a modal
 ele
