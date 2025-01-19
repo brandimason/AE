@@ -1,0 +1,9 @@
+//link accessible name is unclear
+//using the link href to create the label name
+ele.outerFind('.row.sqs-row .sqs-block-image-link[href^="/"]').each(function () {
+  let href = $ae(this).attr('href'); // Get href attribute
+  if (href) {
+    let label = href.replace(/^\//, '').replace(/-/g, ' '); // Remove leading slash and replace hyphens with spaces
+    $ae(this).attr('aria-label', label); // Set aria-label
+  }
+});
