@@ -32,6 +32,10 @@ ele.outerFind('button.lightbox-close').on('click', function () {
 });
 
 
+
+
+// ****EXAMPLE TWO:
+
 //make sure it's a button and not a link
 //label button to let users know it opens a modal
 ele
