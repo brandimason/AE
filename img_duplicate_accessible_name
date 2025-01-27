@@ -1,5 +1,5 @@
 //option 3
-ele.find('img[alt]').each(function () {
+ele.outerFind('img[alt]').each(function () {
   var $current = $ae(this);
   var $next = $current.nextAll('img[alt]').first();
 
