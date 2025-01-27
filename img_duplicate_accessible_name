@@ -1,3 +1,23 @@
+//option 3
+ele.find('img[alt]').each(function () {
+  var $current = $ae(this);
+  var $next = $current.nextAll('img[alt]').first();
+
+  if ($next.length && $current.attr('alt') === $next.attr('alt')) {
+    if ($current.attr('src') === $next.attr('src')) {
+      $next.attr('alt', '');
+    } else {
+      let suffix = 2;
+      let newAlt = $next.attr('alt');
+      while ($next.siblings(`img[alt="${newAlt} (${suffix})"]`).length) {
+        suffix++;
+      }
+      $next.attr('alt', `${newAlt} (${suffix})`);
+    }
+  }
+});
+
+
 //dynamically checks for all <img> elements with an alt attribute within a specific scope (ele) and performs actions based on their attributes.
 ele.outerFind('img[alt]').each(function (index) {
   var $current = $ae(this);
