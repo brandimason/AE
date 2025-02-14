@@ -1,0 +1,17 @@
+// 2/14/25
+
+function updateAriaLive() {
+    $ae('.ls-bottom-nav-wrapper .ls-bottom-slidebuttons a').each(function() {
+        if ($ae(this).hasClass('ls-nav-active')) {
+            $ae(this).attr('aria-live', 'polite');
+        } else {
+            $ae(this).removeAttr('aria-live');
+        }
+    });
+}
+
+// Run on page load
+updateAriaLive();
+
+// Run after each slide change with a slight delay
+setInterval(updateAriaLive, 100);
