@@ -1,1 +1,63 @@
+//cookie dialog open on page load
 
+//on page load, focus needs to move to close button, arrow key trap, tab loop
+
+ele.outerFind('.CookiePolicy').each(function () {
+  var $dialog = $ae(this);
+
+  // Set dialog attributes
+  $dialog.attr({
+    role: 'dialog',
+    'aria-modal': 'true',
+    'aria-labelledby': 'cookie-policy-title'
+  });
+
+  // Add a hidden heading for screen readers
+  $dialog.prepend('<h2 id="cookie-policy-title" class="sr-only">Cookie Policy Dialog</h2>');
+
+  // Enable tab loop and focus management
+  AudioEye.modals.enableTabLoop($dialog);
+
+  // Send focus to the dialog container first
+  AudioEye.focusElement($dialog);
+
+  // Handle keyboard interactions
+  $dialog.on('keydown', function (event) {
+    if (event.key === 'Escape') {
+      // Close dialog on Escape
+      $dialog.find('.alertBtn.GreenButton').click();
+    }
+  });
+});
+
+// Close the modal - refocus trigger
+$ae('.alertBtn.GreenButton').on('click', function () {
+  // Close the dialog
+  $ae('.CookiePolicy').hide();
+
+  // Move focus to the "skip to main" button
+  AudioEye.focusElement('.skip-link');
+
+  // Disable tab loop after closing
+  AudioEye.modals.disableTabLoop('.CookiePolicy');
+});
+
+
+//Notes:
+To make this cookie dialog fully accessible, you should:
+
+Send Focus to the Dialog Container: This ensures the dialog is announced by screen readers.
+Enable Tab Loop: This keeps the focus within the dialog until it is dismissed.
+Close Dialog and Return Focus: Focus should return to the "skip to main" button after the "OK" button is clicked.
+Escape Key Support: Users should be able to dismiss the dialog by pressing the Escape key.
+
+Key Changes and Considerations:
+Role and aria-labelledby: These attributes make the dialog accessible to screen readers.
+Hidden Heading: Added a <h2> with sr-only class to provide an accessible name for the dialog.
+Escape Key Support: Users can close the dialog using the Escape key.
+Focus Management: Focus is moved to the dialog on page load and then to the "skip to main" button when the dialog is closed.
+Things to Test:
+Screen Reader Behavior: Ensure the dialog is announced properly on page load.
+Keyboard Navigation: Confirm the tab loop keeps focus within the dialog.
+Escape Key Functionality: Test if the Escape key correctly closes the dialog.
+Focus Return: Check that focus moves to the "skip to main" button after closing.
