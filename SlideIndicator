@@ -1,0 +1,19 @@
+
+
+function updateAriaLive() {
+    $ae('.ls-bottom-nav-wrapper .ls-bottom-slidebuttons a').each(function(index) {
+        if ($ae(this).hasClass('ls-nav-active')) {
+            $ae(this)
+                .attr('aria-live', 'polite')
+                .attr('aria-label', 'Slide ' + (index + 1) + ' of ' + $ae('.ls-bottom-slidebuttons a').length);
+        } else {
+            $ae(this).removeAttr('aria-live').removeAttr('aria-label');
+        }
+    });
+}
+
+// Run on page load
+updateAriaLive();
+
+// Run after each slide change with a slight delay
+setInterval(updateAriaLive, 100);
