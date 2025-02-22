@@ -1,0 +1,39 @@
+function updatePagination() {
+  let pagination = ele.outerFind('#atcsearchsort');
+
+  // Ensure "New Search" has a proper label
+  pagination.find('.newSearch').attr('aria-label', 'New Search');
+
+  // Add labels to navigation links
+  pagination.find('a').each(function () {
+    let linkText = $(this).text().trim();
+
+    if (linkText === "First") {
+      $(this).attr('aria-label', 'First page');
+    } else if (linkText === "«") {
+      $(this).attr('aria-label', 'Previous page');
+    } else if (linkText === "»") {
+      $(this).attr('aria-label', 'Next page');
+    } else if (linkText === "Last") {
+      $(this).attr('aria-label', 'Last page');
+    } else if ($.isNumeric(linkText)) {
+      // Numbered page links
+      $(this).attr('aria-label', `Page ${linkText}`);
+    }
+  });
+
+  // Handle <strong> elements for current page indication
+  pagination.find('strong').each(function () {
+    let strongText = $(this).text().trim();
+
+    if ($.isNumeric(strongText) || strongText === "First" || strongText === "Last") {
+      $(this).attr('aria-current', 'page');
+    }
+  });
+}
+
+// Call the function initially and also set up a MutationObserver to detect changes
+updatePagination();
+
+let observer = new MutationObserver(updatePagination);
+observer.observe(document.getElementById('atcsearchsort'), { childList: true, subtree: true });
