@@ -1,0 +1,7 @@
+$('#CartPopup').each(function () {
+  if ($(this).length) {
+    console.log('Modal found:', this);
+  } else {
+    console.log('Modal not found');
+  }
+});
