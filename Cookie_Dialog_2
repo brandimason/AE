@@ -1,0 +1,43 @@
+3/12/25
+//cookie dialog open on page load
+ele.outerFind('.alertBtn.BurgundyButtonBG').attr('role', 'button');
+
+$ae('.CookiePolicy').each(function () {
+  var $dialog = $ae(this);
+
+  // Set dialog attributes
+  $dialog.attr({
+    role: 'dialog',
+    'aria-modal': 'true',
+    'aria-labelledby': 'cookie-policy-title'
+  });
+
+  // Add a hidden heading for screen readers
+  $dialog.prepend('<h2 id="cookie-policy-title" class="ae-compliance-indent" style="display: none;">Cookie Policy Dialog</h2>');
+
+  // Enable tab loop and focus management
+  AudioEye.modals.enableTabLoop($dialog);
+
+  // Send focus to the dialog container first
+  AudioEye.focusElement($dialog);
+
+  // Handle keyboard interactions
+  $dialog.on('keydown', function (event) {
+    if (event.key === 'Escape') {
+      // Close dialog on Escape
+      $dialog.find('.alertBtn.BurgundyButtonBG').click();
+    }
+  });
+});
+
+// Close the modal - refocus trigger
+$ae('.alertBtn.BurgundyButtonBG').on('click', function () {
+  // Close the dialog
+  $ae('.CookiePolicy').hide();
+
+  // Move focus to the "skip to main" button
+  AudioEye.focusElement('.skip-link');
+
+  // Disable tab loop after closing
+  AudioEye.modals.disableTabLoop('.CookiePolicy');
+});
