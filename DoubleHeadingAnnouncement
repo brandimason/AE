@@ -1,0 +1,16 @@
+// For div that has two heading elements that announce on two lines (should act as one heading)
+
+ele.outerFind('.row.banners .sf_colsIn.col-md-4').each(function () {
+  let parentDiv = $ae(this).find('div >').has('h5');
+  let headingText = $ae(this).text().replace(/\s+/g, ' ').trim();
+
+  // Set the combined accessible heading on the parent div
+  parentDiv.attr({
+    role: 'heading',
+    'aria-level': 2,
+    'aria-label': headingText,
+  });
+
+  // Hide all inner heading tags from AT
+  parentDiv.find('h1, h2, h3, h4, h5, h6').attr('aria-hidden', 'true');
+});
