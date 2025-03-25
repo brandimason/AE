@@ -1,0 +1,36 @@
+//label button to let users know it opens a modal
+ele.outerFind('#belowsection .BurgundyButtonBG.LoginBtn')
+  .attr({ role: 'button', 'aria-label': 'Login - Opens Dialog' });
+
+//add attributes to dialog
+ele.outerFind('#LiveHTMLWrapper489 .whitewrapper').attr({
+  role: 'dialog',
+  'aria-modal': 'true',
+  'aria-label': 'Login Dialog',
+  'tabindex': 0
+});
+
+//close button
+ele.outerFind('#LiveHTMLWrapper489 .whitewrapper .loginX').attr({
+  role: 'button',
+  'aria-label': 'Close login dialog',
+  'tabindex': 0
+});
+
+
+//when login button is clicked, send focus to dialog
+ele.outerFind('#belowsection .BurgundyButtonBG.LoginBtn').on('click', function () {
+  AudioEye.modals.enableTabLoop($ae('#LiveHTMLWrapper489 .whitewrapper'));
+  // SEND FOCUS TO THE CLOSE BUTTON
+
+  setTimeout(() => {
+    AudioEye.focusElement($ae('.loginX').first());
+    console.log('focusing close button');
+  }, 500);
+});
+
+// Close the modal - refocus trigger
+ele.outerFind('.loginX').on('click', function () {
+  AudioEye.focusElement($ae('#belowsection .BurgundyButtonBG.LoginBtn'));
+  AudioEye.modals.disableTabLoop('#LiveHTMLWrapper489 .whitewrapper');
+});
