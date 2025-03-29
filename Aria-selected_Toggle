@@ -1,0 +1,19 @@
+ele.outerFind('.scm-action-header__actions-multiple button').each(function () {
+  // Set the initial aria-selected state based on the "active" class
+  if ($ae(this).hasClass("active")) {
+    $ae(this).attr("aria-selected", "true");
+  } else {
+    $ae(this).attr("aria-selected", "false");
+  }
+
+  // Add click event to toggle aria-selected
+  $ae(this).on('click', function () {
+    // Remove "active" and "aria-selected" from all buttons
+    ele.find('.scm-action-header__actions-multiple button').each(function () {
+      $ae(this).removeClass("active").attr("aria-selected", "false");
+    });
+
+    // Add "active" class and set "aria-selected" to true for the clicked button
+    $ae(this).addClass("active").attr("aria-selected", "true");
+  });
+});
