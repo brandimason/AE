@@ -1,0 +1,95 @@
+Since `aria-selected` is not natively supported on `<button>` elements and is generally meant for roles like `tab`, `option`, or `gridcell`, most screen readers will not announce changes to it. To ensure proper announcement, consider one of these solutions:
+
+### Solution 1: Use `aria-pressed`
+`aria-pressed` is better suited for toggle buttons and is widely supported by screen readers.
+
+**Update your JavaScript to use `aria-pressed`:**
+```javascript
+ele.outerFind('.scm-action-header__actions-multiple button').each(function () {
+  // Set the initial aria-pressed state based on the "active" class
+  if ($ae(this).hasClass("active")) {
+    $ae(this).attr("aria-pressed", "true");
+  } else {
+    $ae(this).attr("aria-pressed", "false");
+  }
+
+  // Add click event to toggle aria-pressed
+  $ae(this).on('click', function () {
+    // Remove "active" and "aria-pressed" from all buttons
+    $ae('.scm-action-header__actions-multiple button').each(function () {
+      $ae(this).removeClass("active").attr("aria-pressed", "false");
+    });
+
+    // Add "active" class and set "aria-pressed" to true for the clicked button
+    $ae(this).addClass("active").attr("aria-pressed", "true");
+  });
+});
+```
+**Why?**
+- `aria-pressed` is designed for buttons that toggle between states.
+- Screen readers announce the change when a user clicks the button.
+
+### Solution 2: Use `role="tab"`
+If the buttons function like tabs (switching between views), setting `role="tab"` along with `aria-selected` will trigger announcements.
+
+**Update your HTML:**
+```html
+<div class="btn-group scm-button-group__layout" role="tablist">
+  <button type="button" role="tab" aria-selected="false">List</button>
+  <button type="button" role="tab" aria-selected="false">Grid</button>
+  <button type="button" role="tab" class="active" aria-selected="true">Custom</button>
+</div>
+```
+**Update your JavaScript:**
+```javascript
+ele.outerFind('.scm-action-header__actions-multiple button').each(function () {
+  // Set the initial aria-selected state
+  if ($ae(this).hasClass("active")) {
+    $ae(this).attr("aria-selected", "true").attr("tabindex", "0");
+  } else {
+    $ae(this).attr("aria-selected", "false").attr("tabindex", "-1");
+  }
+
+  // Add click event to toggle aria-selected
+  $ae(this).on('click', function () {
+    $ae('.scm-action-header__actions-multiple button').each(function () {
+      $ae(this).removeClass("active").attr("aria-selected", "false").attr("tabindex", "-1");
+    });
+
+    $ae(this).addClass("active").attr("aria-selected", "true").attr("tabindex", "0");
+  });
+});
+```
+**Why?**
+- Screen readers expect `aria-selected` within a `role="tablist"`.
+- Setting `tabindex="0"` ensures the active button is focusable.
+
+### Solution 3: Add Live Region Announcement
+If you must use `aria-selected` on `<button>`, use an off-screen live region to announce the selection change.
+
+**Add a live region:**
+```html
+<div id="live-region" aria-live="polite" style="position: absolute; left: -9999px;"></div>
+```
+**Modify JavaScript:**
+```javascript
+$ae('.scm-action-header__actions-multiple button').on('click', function () {
+  $ae('.scm-action-header__actions-multiple button').each(function () {
+    $ae(this).removeClass("active").attr("aria-selected", "false");
+  });
+
+  $ae(this).addClass("active").attr("aria-selected", "true");
+
+  // Announce selection change
+  $ae('#live-region').text($ae(this).attr('aria-label') + ' view selected');
+});
+```
+**Why?**
+- This explicitly tells screen readers to announce the change.
+
+### Best Approach?
+1. **If buttons toggle modes → Use `aria-pressed`.**
+2. **If buttons behave like tabs → Use `role="tab"` with `aria-selected`.**
+3. **If you must use `aria-selected` on `<button>` → Add a live region.**
+
+Would you like help testing which approach works best in your environment?
